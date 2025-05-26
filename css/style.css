@@ -39,6 +39,56 @@ a {
   margin-right: auto;
 }
 
+.main-heading {
+  width: fit-content;
+  border: 2px solid black;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: auto;
+  position: relative;
+}
+
+.main-heading h3 {
+  font-size: 30px;
+}
+.main-heading::before,
+.main-heading::after {
+  content: "";
+  position: absolute;
+  background-color: var(--main-color);
+  width: 12px;
+  height: 12px;
+  border-radius: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: width 0.5s 0.3s forward, border-radius 0.5s 0.3s, height 0.5s 0.3s,
+    left 0.3s, right 0.5s;
+  z-index: -1;
+}
+.main-heading:hover {
+  color: white;
+  border: 2px solid white;
+  transition-delay: 0.5s;
+}
+.main-heading::before {
+  left: -25px;
+}
+.main-heading::after {
+  right: -25px;
+}
+.main-heading:hover::before,
+.main-heading:hover::after {
+  width: 50%;
+  height: 100%;
+  border-radius: 0;
+}
+.main-heading:hover::before {
+  left: 0;
+}
+.main-heading:hover::after {
+  right: 0;
+}
 /* Small */
 @media (min-width: 768px) {
   .container {
@@ -68,7 +118,6 @@ header .container {
   display: flex;
   justify-content: space-between;
   position: relative;
-  /* align-items: center; */
 }
 
 header .container > ul {
@@ -85,7 +134,7 @@ header .container .logo {
   justify-content: center;
 }
 
-header .container > ul > li a {
+header .container > ul > li > a {
   display: block;
   position: relative;
   color: black;
@@ -99,7 +148,7 @@ header .container > ul > li a {
   justify-content: center;
 }
 
-header .container > ul > li a::before {
+header .container > ul > li > a::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -122,15 +171,22 @@ header .container .hidden-nav {
   display: flex;
   position: absolute;
   left: 0;
-  top: 72px;
-  padding: 40px;
-  column-gap: 30px;
+  top: calc(100% + 50px);
+  padding: 30px;
+  gap: 40px;
   width: 100%;
+  transition: var(--main-transition);
+  opacity: 0;
+  z-index: -1;
+  border-bottom: 3px solid var(--main-color);
+  transition: top var(--main-transition), opacity var(--main-transition);
+  background-color: white;
 }
 
 header .container .hidden-nav .links {
   display: flex;
   flex-direction: column;
+  min-width: 250px;
   flex: 1;
 }
 
@@ -138,9 +194,11 @@ header .container .hidden-nav .links li {
   position: relative;
   overflow: hidden;
 }
+
 header .container .hidden-nav .links li:not(:last-child) {
   border-bottom: 1px solid #eee;
 }
+
 header .container .hidden-nav .links li i {
   font-size: 18px;
   margin-right: 12px;
@@ -159,7 +217,7 @@ header .container .hidden-nav .links li::before {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #eee;
+  background-color: #eeeeee6b;
   left: -100%;
   transition: 0.5s;
   z-index: -1;
@@ -167,7 +225,149 @@ header .container .hidden-nav .links li::before {
 header .container .hidden-nav .links li:hover::before {
   left: 0;
 }
+
 header .imag img {
   max-width: 100%;
 }
+
+header .container > ul > li:last-child:hover > .hidden-nav {
+  opacity: 1;
+  z-index: 100;
+  top: calc(100% + 1px);
+}
+
+@media (max-width: 992px) {
+  header .imag {
+    display: none;
+  }
+}
+@media (max-width: 776px) {
+  header .container .hidden-nav {
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+  }
+  header .container .logo {
+    height: 50px;
+  }
+  header .container {
+    flex-direction: column;
+  }
+  header .container > ul > li > a {
+    padding: 10px;
+    font-size: 14px;
+    height: 40px;
+  }
+  header .container > ul {
+    justify-content: center;
+  }
+}
 /* End header */
+
+/* Start landing */
+.landing {
+  position: relative;
+  height: 100vh;
+}
+.landing::before {
+  content: "";
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  top: -10px;
+  left: 0;
+  background-color: var(--section-background);
+  z-index: -1;
+  transform: skewY(-6deg);
+  transform-origin: top left;
+}
+.landing .container {
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 72px);
+  padding-bottom: 120px;
+}
+
+.landing .container .text {
+  width: 520px;
+}
+
+.landing .container .imag img {
+  width: 600px;
+  position: relative;
+  animation: up-down 3s infinite linear;
+}
+
+.landing .container .text h1 {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: -2px;
+}
+.landing .container .text p {
+  color: #666;
+  line-height: 1.7;
+  margin: 0 0 10px;
+  font-size: 23px;
+}
+
+@keyframes up-down {
+  0%,
+  100% {
+    top: 0;
+  }
+  50% {
+    top: -50px;
+  }
+}
+
+@media (max-width: 992px) {
+  .landing .container {
+    justify-content: center;
+  }
+  .landing .container .imag {
+    display: none;
+  }
+  .landing .container .text {
+    text-align: center;
+  }
+}
+@media (max-width: 767px) {
+  .landing .container .text h1 {
+    font-size: 30px;
+  }
+  .landing .container .text p {
+    font-size: 18px;
+  }
+}
+
+.landing a {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 130px;
+  color: var(--main-color);
+  animation-name: arrow;
+  animation-duration: 2s;
+  animation-timing-function: ease;
+  /* animation-delay: 0.5s; */
+  animation-iteration-count: infinite;
+}
+.landing a i {
+  font-size: 24px;
+}
+@keyframes arrow {
+  0% {
+    bottom: 130px;
+  }
+  10% {
+    bottom: 110px;
+  }
+  30% {
+    bottom: 130px;
+  }
+  40% {
+    bottom: 110px;
+  }
+}
+/* End Landing */
